@@ -1,25 +1,26 @@
-import { handleLogIn } from "./LoginController";
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useLogin } from "./useLogin";
 import styles from "./Login.module.scss";
 
 function Login() {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [isPassShown, setIsPassShown] = useState(false);
-
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  function handleShowPassword(prev) {
-    setIsPassShown((prev = !prev));
-  }
+  const {
+    handleLogIn,
+    error,
+    setPassword,
+    setUserName,
+    username,
+    password,
+    handleShowPassword,
+    isPassShown,
+  } = useLogin();
 
   return (
     <div className={styles["login"]}>
+      <p className={error ? styles["error-msg"] : styles["offscreen"]}>
+        {error}
+      </p>
       <h1>Welcome Back!</h1>
       <p>Please put your credentials.</p>
-      <div className={styles["login-inputs"]}>
+      <form onSubmit={handleLogIn} className={styles["login-inputs"]}>
         <input
           type="text"
           name="username"
@@ -42,16 +43,11 @@ function Login() {
           />
           <label>Show Password</label>
         </div>
-        <button
-          color="danger"
-          onClick={() => handleLogIn(username, password, navigate, location)}
-        >
-          Submit
-        </button>
+        <button color="danger">Submit</button>
         <p>
-          Doesn't have an Account? <a href="/signup">Signup</a>
+          Doesn't have an Account? <a href="/register">Register</a>
         </p>
-      </div>
+      </form>
     </div>
   );
 }
