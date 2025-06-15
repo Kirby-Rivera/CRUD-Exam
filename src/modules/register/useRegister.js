@@ -1,30 +1,45 @@
-import { useState, useEffect } from "react";
-import { Navigate } from "react-router";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router";
 import axios from "api/axios";
 
-const EMAIL_REGEX = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export function useRegister() {
-  const [error, setError] = useState(null);
+  const emailRef = useRef();
+  const errRef = useRef();
+
+  const [error, setError] = useState("");
+  const [isPassShown, setIsPassShown] = useState(false);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
 
   const [password, setPassword] = useState("");
   const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
 
   const [matchPwd, setMatchPwd] = useState("");
   const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(email));
+    emailRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email.trim()));
   }, [email]);
 
   useEffect(() => {
-    setValidPwd(PWD_REGEX.test(password));
+    setValidPwd(PWD_REGEX.test(password.trim()));
     setValidMatch(password === matchPwd);
   }, [password, matchPwd]);
 
@@ -44,7 +59,7 @@ export function useRegister() {
     }
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "/user/signup",
         JSON.stringify({
           firstName: firstName,
@@ -58,8 +73,7 @@ export function useRegister() {
         }
       );
 
-      <Navigate to="/" />;
-      console.log(response);
+      navigate(location.state?.from?.pathname || "/", { replace: true });
     } catch (error) {
       if (!error?.response) {
         setError("No Server Response");
@@ -71,19 +85,37 @@ export function useRegister() {
     }
   }
 
+  function handleShowPassword(prev) {
+    setIsPassShown((prev = !prev));
+  }
+
   return {
     error,
     firstName,
     lastName,
     email,
     password,
+    matchPwd,
     setFirstName,
     setLastName,
     setEmail,
     setPassword,
     handleRegister,
+    setMatchPwd,
     validEmail,
+    setValidEmail,
     validPwd,
+    setValidPwd,
     validMatch,
+    emailFocus,
+    setEmailFocus,
+    pwdFocus,
+    setPwdFocus,
+    matchFocus,
+    setMatchFocus,
+    emailRef,
+    errRef,
+    isPassShown,
+    handleShowPassword,
   };
 }
