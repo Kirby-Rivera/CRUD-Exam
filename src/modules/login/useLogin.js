@@ -16,7 +16,7 @@ export function useLogin() {
   }, [username, password]);
 
   async function handleLogIn(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       const response = await axios.post(
@@ -29,6 +29,7 @@ export function useLogin() {
       );
 
       cookies.set("SESSION_COOKIE", response.data.data.token);
+      cookies.set("USER_ID", response.data.data.userId);
       navigate(location.state?.from?.pathname || "/home", { replace: true });
     } catch (err) {
       if (!err?.response) {

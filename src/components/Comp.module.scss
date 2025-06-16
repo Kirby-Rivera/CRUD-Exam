@@ -1,6 +1,47 @@
-.main-layout {
+@import url("https://fonts.cdnfonts.com/css/varuna");
+
+.auth-layout {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.main-nav {
+  background: rgb(236, 177, 236);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+
+  h1 {
+    font-family: "VARUNA", sans-serif;
+    font-variant: small-caps;
+    font-size: 36px;
+    color: rgb(47, 50, 65);
+  }
+
+  button {
+    all: unset;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 12px;
+    transition: 0.2s ease-in-out;
+    border: 2px solid rgb(236, 177, 236);
+
+    &:hover {
+      background: rgb(68, 16, 68);
+      color: rgb(211, 211, 227);
+      border: 2px solid rgb(226, 215, 226);
+    } 
+  }
+}
+
+.main-footer {
+  background: rgb(68, 16, 68);
+  padding: 5px 10px;
+
+  p {
+    color: rgb(211, 211, 227);
+    text-align: right;
+  }
 }
