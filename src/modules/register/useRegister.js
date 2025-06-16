@@ -6,7 +6,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export function useRegister() {
-  const emailRef = useRef();
+  const userRef = useRef();
   const errRef = useRef();
 
   const [error, setError] = useState("");
@@ -31,7 +31,7 @@ export function useRegister() {
   const location = useLocation();
 
   useEffect(() => {
-    emailRef.current?.focus();
+    userRef.current?.focus();
   }, []);
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export function useRegister() {
     setPwdFocus,
     matchFocus,
     setMatchFocus,
-    emailRef,
+    userRef,
     errRef,
     isPassShown,
     handleShowPassword,

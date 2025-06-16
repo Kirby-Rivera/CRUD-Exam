@@ -24,7 +24,7 @@ function Register() {
     setPwdFocus,
     matchFocus,
     setMatchFocus,
-    emailRef,
+    userRef,
     isPassShown,
     handleShowPassword,
   } = useRegister();
@@ -43,6 +43,7 @@ function Register() {
             <input
               type="text"
               id="firstname"
+              ref={userRef}
               required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -64,7 +65,6 @@ function Register() {
         <input
           type="text"
           id="email"
-          ref={emailRef}
           autoComplete="off"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
