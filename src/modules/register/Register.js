@@ -24,7 +24,7 @@ function Register() {
     setPwdFocus,
     matchFocus,
     setMatchFocus,
-    emailRef,
+    userRef,
     isPassShown,
     handleShowPassword,
   } = useRegister();
@@ -36,6 +36,7 @@ function Register() {
       </p>
       <h1>Doesn't have an account?</h1>
       <p>Fill up the necessary details to register!</p>
+      
       <form onSubmit={handleRegister} className={styles["register-inputs"]}>
         <div className={styles["register-container"]}>
           <div className={styles["register-group"]}>
@@ -43,6 +44,7 @@ function Register() {
             <input
               type="text"
               id="firstname"
+              ref={userRef}
               required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -64,7 +66,6 @@ function Register() {
         <input
           type="text"
           id="email"
-          ref={emailRef}
           autoComplete="off"
           onChange={(e) => setEmail(e.target.value)}
           value={email}

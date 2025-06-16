@@ -20,7 +20,7 @@ function RegisterInputField(props) {
     setPwdFocus,
     matchFocus,
     setMatchFocus,
-    emailRef,
+    userRef,
   } = useRegister();
 
   return currentInput === "email" ? (
@@ -29,7 +29,7 @@ function RegisterInputField(props) {
       <input
         type="text"
         id="email"
-        ref={emailRef}
+        ref={userRef}
         autoComplete="off"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
