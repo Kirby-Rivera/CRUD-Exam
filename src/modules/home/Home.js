@@ -11,13 +11,26 @@ function Home() {
     setTitle,
     message,
     setMessage,
-    error
+    error,
+    loading,
+    deletePost,
   } = useHome();
 
   return (
     <div className={styles["home"]}>
-      <HomeAddForm addPost={addPost} title={title} setTitle={setTitle} message={message} setMessage={setMessage} error={error}/>
-      <HomePostSection posts={posts} />
+      <HomeAddForm
+        addPost={addPost}
+        title={title}
+        setTitle={setTitle}
+        message={message}
+        setMessage={setMessage}
+        error={error}
+      />
+      <HomePostSection
+        deletePost={deletePost}
+        posts={posts}
+        loading={loading}
+      />
     </div>
   );
 }

@@ -14,6 +14,7 @@ function HomeAddForm(props) {
   return (
     <Form onSubmit={addPost} className={styles["add-post"]}>
       <p>{error}</p>
+      <h3>Add a post</h3>
       <label htmlFor="title">Title: </label>
       <Input
         id="title"

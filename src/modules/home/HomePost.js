@@ -1,7 +1,7 @@
 import styles from "./Home.module.scss";
 
 function HomePost(props) {
-  const { createdAt, message, title } = props;
+  const { createdAt, message, title, deletePost } = props;
 
   const created_at = new Date(createdAt);
 
@@ -17,11 +17,10 @@ function HomePost(props) {
   const date = created_at.toLocaleString("en-US", options);
 
   return (
-    <div className={styles["post"]}>
+    <div onClick={deletePost} className={styles["post"]}>
       <h4>{title}</h4>
       <p>{message}</p>
       <i>{date}</i>
-      
     </div>
   );
 }

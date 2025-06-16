@@ -11,10 +11,14 @@ export default function useHome() {
   const [message, setMessage] = useState("");
   const [render, setRender] = useState(false);
 
+  function clearInputs() {
+    setTitle("");
+    setMessage("");
+  }
+
   useEffect(() => {
     setLoading(true);
     let isMounted = true;
-
     async function getPost() {
       try {
         const response = await axiosPrivate.get(
@@ -57,6 +61,22 @@ export default function useHome() {
 
       setError(response.data.message);
       setRender((render) => !render);
+      clearInputs();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function deletePost(id) {
+    if (!id) {
+      setError("Missing post Id.");
+    }
+
+    try {
+      const response = await axiosPrivate.delete(`/post/${id}`);
+
+      setError(response.data.message);
+      setRender((render) => !render);
     } catch (error) {
       console.log(error);
     }
@@ -71,5 +91,6 @@ export default function useHome() {
     message,
     setMessage,
     addPost,
+    deletePost,
   };
 }
