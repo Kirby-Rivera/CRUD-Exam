@@ -14,7 +14,7 @@ function HomeForm(props) {
     setError,
     current,
     toggleModal,
-    deletePost
+    deletePost,
   } = props;
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function HomeForm(props) {
   ) : current === "delete-post" ? (
     <Form onSubmit={deletePost} className={styles["form-post"]}>
       <p>Notice!</p>
-      <p>Are you sure you want to delete this user?</p>
+      <p>Are you sure you want to delete this post?</p>
       <div>
         <Button onClick={toggleModal}>Cancel</Button>
         <Button>Delete</Button>

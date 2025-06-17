@@ -46,7 +46,6 @@ function Home() {
         current={currentModal}
         toggleModal={toggleModal}
         deletePost={deletePost}
-        // {...useHome()}
       />
       <HomePostSection
         posts={posts}

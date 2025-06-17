@@ -3,7 +3,7 @@ import { ICONS } from "assets/icons";
 
 function HomePost(props) {
   const {
-    createdAt,
+    updatedAt,
     message,
     title,
     setTitle,
@@ -13,7 +13,7 @@ function HomePost(props) {
     toggleModal,
   } = props;
 
-  const created_at = new Date(createdAt);
+  const created_at = new Date(updatedAt);
 
   const options = {
     month: "long",
