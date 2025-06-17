@@ -10,6 +10,8 @@ export default function useHome() {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [render, setRender] = useState(false);
+  const [currentModal, setCurrentModal] = useState("");
+  const [id, setId] = useState(null);
 
   function clearInputs() {
     setTitle("");
@@ -17,7 +19,11 @@ export default function useHome() {
 
     setTimeout(() => {
       setError("");
-    }, 3000);
+    }, 4000);
+  }
+
+  function toggleModal(current) {
+    setCurrentModal(current);
   }
 
   useEffect(() => {
@@ -65,13 +71,17 @@ export default function useHome() {
 
       setError(response.data.message);
       setRender((render) => !render);
+
       clearInputs();
+      toggleModal("");
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function deletePost(id) {
+  async function deletePost(e) {
+    e.preventDefault();
+
     if (!id) {
       setError("Missing post Id.");
     }
@@ -83,6 +93,31 @@ export default function useHome() {
       setRender((render) => !render);
 
       clearInputs();
+      toggleModal("");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function editPost(e) {
+    e.preventDefault();
+
+    if (!title || !message) {
+      setError("Title or Message is missing.");
+      return;
+    }
+
+    try {
+      const response = await axiosPrivate.put(
+        `/post/${id}`,
+        JSON.stringify({ title: title.trim(), message: message.trim() })
+      );
+
+      setError(response.data.message);
+      setRender((render) => !render);
+
+      clearInputs();
+      toggleModal("");
     } catch (error) {
       console.log(error);
     }
@@ -98,5 +133,11 @@ export default function useHome() {
     setMessage,
     addPost,
     deletePost,
+    setError,
+    editPost,
+    setId,
+    clearInputs,
+    currentModal,
+    toggleModal,
   };
 }

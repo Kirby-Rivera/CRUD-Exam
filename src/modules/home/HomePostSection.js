@@ -2,7 +2,8 @@ import HomePost from "./HomePost";
 import styles from "./Home.module.scss";
 
 function HomePostSection(props) {
-  const { posts, loading, error, deletePost } = props;
+  const { posts, loading, error, setTitle, setMessage, setId, toggleModal } =
+    props;
 
   if (loading) return <p>Loading... </p>;
   if (error) return <p>Error loading data</p>;
@@ -12,9 +13,18 @@ function HomePostSection(props) {
       {posts.length === 0 ? (
         <p>No post</p>
       ) : (
-        posts?.map((post) => <HomePost deletePost={() => deletePost(post.postId)} key={post.postId} {...post} />)
+        posts?.map((post) => (
+          <HomePost
+            key={post.postId}
+            setTitle={setTitle}
+            setMessage={setMessage}
+            setId={setId}
+            toggleModal={toggleModal}
+            {...post}
+          />
+        ))
       )}
-    </div>  
+    </div>
   );
 }
 
