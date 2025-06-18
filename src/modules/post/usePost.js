@@ -25,10 +25,11 @@ export default function useHome() {
       const offset = (newPage - 1) * meta.limit;
 
       const response = await axiosPrivate.get(
-        `/post?limit=${meta.limit}&offset=${offset}&orderBy=${meta.orderBy}&order=${meta.order}`
+        `/post?limit=${meta.limit}&offset=${offset}&order=${meta.order}&orderBy=title`
       );
 
       setPosts(response.data.data);
+      setMeta(response.data.meta);
     }
   }
 
@@ -55,7 +56,7 @@ export default function useHome() {
     async function getPost() {
       try {
         const response = await axiosPrivate.get(
-          "/post?limit=1&orderBy=title&order=DESC",
+          "/post?limit=5&orderBy=title&order=DESC",
           {
             signal: controller.signal,
           }
