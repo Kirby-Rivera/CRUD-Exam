@@ -2,8 +2,6 @@ import { useRegister } from "./useRegister";
 import styles from "./Register.module.scss";
 
 function RegisterInputField(props) {
-  const { currentInput } = props;
-
   const {
     email,
     password,
@@ -21,7 +19,8 @@ function RegisterInputField(props) {
     matchFocus,
     setMatchFocus,
     userRef,
-  } = useRegister();
+    currentInput,
+  } = props;
 
   return currentInput === "email" ? (
     <>

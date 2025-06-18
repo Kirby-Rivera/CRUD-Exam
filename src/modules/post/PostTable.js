@@ -30,7 +30,9 @@ function HomePostSection(props) {
         </thead>
         <tbody>
           {posts.length === 0 ? (
-            <p>No post</p>
+            <tr scope="row" className={styles["no-post"]}>
+              <td colSpan={4}>No Post</td>
+            </tr>
           ) : (
             posts?.map((post) => (
               <PostTableRow

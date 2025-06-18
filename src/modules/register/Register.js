@@ -1,5 +1,6 @@
 import { useRegister } from "./useRegister";
 import styles from "./Register.module.scss";
+import { Card, Form, Input, Button, Row } from "reactstrap";
 
 function Register() {
   const {
@@ -30,18 +31,18 @@ function Register() {
   } = useRegister();
 
   return (
-    <div className={styles["register"]}>
+    <Card className={styles["register"]}>
       <p className={error ? styles["error-msg"] : styles["offscreen"]}>
         {error}
       </p>
       <h1>Doesn't have an account?</h1>
       <p>Fill up the necessary details to register!</p>
-      
-      <form onSubmit={handleRegister} className={styles["register-inputs"]}>
-        <div className={styles["register-container"]}>
+
+      <Form onSubmit={handleRegister} className={styles["register-inputs"]}>
+        <Row className="p-3">
           <div className={styles["register-group"]}>
             <label htmlFor="firstname">First Name:</label>
-            <input
+            <Input
               type="text"
               id="firstname"
               ref={userRef}
@@ -52,7 +53,7 @@ function Register() {
           </div>
           <div className={styles["register-group"]}>
             <label htmlFor="lastname">Last Name:</label>
-            <input
+            <Input
               type="text"
               id="lastname"
               required
@@ -60,10 +61,10 @@ function Register() {
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
-        </div>
+        </Row>
 
         <label htmlFor="email">Email:</label>
-        <input
+        <Input
           type="text"
           id="email"
           autoComplete="off"
@@ -87,7 +88,7 @@ function Register() {
         </p>
 
         <label htmlFor="password">Password:</label>
-        <input
+        <Input
           type={isPassShown ? "text" : "password"}
           id="password"
           onChange={(e) => setPassword(e.target.value)}
@@ -110,7 +111,7 @@ function Register() {
         </p>
 
         <label htmlFor="confirm_pwd">Confirm Password:</label>
-        <input
+        <Input
           type={isPassShown ? "text" : "password"}
           id="confirm_pwd"
           onChange={(e) => setMatchPwd(e.target.value)}
@@ -129,11 +130,11 @@ function Register() {
               : styles["offscreen"]
           }
         >
-          Must match the first password input field.
+          Must match the first password Input field.
         </p>
 
         <div className={styles["checkbox"]}>
-          <input
+          <Input
             type="checkbox"
             checked={isPassShown}
             onChange={() => handleShowPassword(isPassShown)}
@@ -141,16 +142,16 @@ function Register() {
           <p>Show Password</p>
         </div>
 
-        <button
+        <Button
           disabled={!validEmail || !validPwd || !validMatch ? true : false}
         >
           Register
-        </button>
+        </Button>
         <p>
           Already have an account? <a href="/">Login</a>
         </p>
-      </form>
-    </div>
+      </Form>
+    </Card>
   );
 }
 
