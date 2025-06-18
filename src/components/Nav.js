@@ -1,3 +1,4 @@
+import { Button } from "reactstrap";
 import styles from "./Comp.module.scss";
 import { useLogout } from "helpers/useLogout";
 
@@ -7,9 +8,9 @@ function Nav() {
   return (
     <nav className={styles["main-nav"]}>
       <h1>Thread.</h1>
-      <button onClick={logout}>
+      <Button onClick={logout}>
         Logout
-      </button>
+      </Button>
     </nav>
   );
 }

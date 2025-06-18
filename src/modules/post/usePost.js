@@ -12,6 +12,29 @@ export default function useHome() {
   const [render, setRender] = useState(false);
   const [currentModal, setCurrentModal] = useState("");
   const [id, setId] = useState(null);
+  const [modal, setModal] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [meta, setMeta] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(meta.totalRows / meta.limit);
+
+  function handlePageChange(newPage) {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      fetchData(newPage);
+    }
+  }
+
+  console.log(meta.limit)
+
+  async function fetchData(page) {
+    const offset = (page - 1) + meta.limit;
+    const response = await axiosPrivate.get(
+      `/post?limit=${meta.limit}&offset=${offset}`
+    );
+
+    setPosts(response.data.data);
+  }
 
   function clearInputs() {
     setTitle("");
@@ -22,8 +45,11 @@ export default function useHome() {
     }, 4000);
   }
 
-  function toggleModal(current) {
-    setCurrentModal(current);
+  function toggleModal() {
+    setModal(!modal);
+    if (!modal) {
+      setCurrentModal("");
+    }
   }
 
   useEffect(() => {
@@ -32,12 +58,13 @@ export default function useHome() {
     async function getPost() {
       try {
         const response = await axiosPrivate.get(
-          "/post?orderBy=title&order=ASC",
+          "/post?limit=2",
           {
             signal: controller.signal,
           }
         );
         isMounted && setPosts(response.data.data);
+        setMeta(response.data.meta);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -49,9 +76,9 @@ export default function useHome() {
 
     return () => {
       isMounted = false;
-      setTimeout(() => {
-        controller.abort();
-      }, 1000);
+      // setTimeout(() => {
+      //   controller.abort();
+      // }, 1000);
     };
   }, [render]);
 
@@ -69,7 +96,7 @@ export default function useHome() {
         JSON.stringify({ title: title.trim(), message: message.trim() })
       );
 
-      setError(response.data.message);
+      setSuccess(response.data.message);
       setRender((render) => !render);
 
       clearInputs();
@@ -89,7 +116,7 @@ export default function useHome() {
     try {
       const response = await axiosPrivate.delete(`/post/${id}`);
 
-      setError(response.data.message);
+      setSuccess(response.data.message);
       setRender((render) => !render);
 
       clearInputs();
@@ -113,7 +140,7 @@ export default function useHome() {
         JSON.stringify({ title: title.trim(), message: message.trim() })
       );
 
-      setError(response.data.message);
+      setSuccess(response.data.message);
       setRender((render) => !render);
 
       clearInputs();
@@ -138,6 +165,13 @@ export default function useHome() {
     setId,
     clearInputs,
     currentModal,
+    setCurrentModal,
     toggleModal,
+    modal,
+    success,
+    meta,
+    currentPage,
+    totalPages,
+    handlePageChange,
   };
 }

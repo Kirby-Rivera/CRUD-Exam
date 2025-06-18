@@ -1,4 +1,4 @@
-import styles from "./Home.module.scss";
+import styles from "./Post.module.scss";
 import { ICONS } from "assets/icons";
 
 function HomePost(props) {
@@ -10,6 +10,7 @@ function HomePost(props) {
     setMessage,
     setId,
     postId,
+    setCurrentModal,
     toggleModal,
   } = props;
 
@@ -27,32 +28,32 @@ function HomePost(props) {
   const date = created_at.toLocaleString("en-US", options);
 
   return (
-    <div className={styles["post"]}>
-      <h4>{title}</h4>
-      <p>{message}</p>
-      <i>{date}</i>
+    <tr className={styles["table-row"]}>
+      <td>{title}</td>
+      <td>{message}</td>
+      <td>{date}</td>
 
-      <div>
+      <td className={styles["table-actions"]}>
         <button
           onClick={() => (
             setTitle(title),
             setMessage(message),
             setId(postId),
-            toggleModal("edit-post")
+            toggleModal(),
+            setCurrentModal("edit-post")
           )}
         >
           {ICONS.editIcon}
         </button>
         <button
           onClick={() => (
-            setId(postId),
-            toggleModal("delete-post")
+            setId(postId), toggleModal(), setCurrentModal("delete-post")
           )}
         >
           {ICONS.deleteIcon}
         </button>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 }
 
