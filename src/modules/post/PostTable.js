@@ -12,9 +12,6 @@ function HomePostSection(props) {
     setId,
     setCurrentModal,
     toggleModal,
-    meta,
-    render,
-    setRender
   } = props;
 
   if (loading) return <Spinner color="dark" />;
@@ -22,7 +19,7 @@ function HomePostSection(props) {
 
   return (
     <>
-      <Table className={styles["table"] + " mt-3"} >
+      <Table bordered responsive className={styles["table"] + " mt-3"}>
         <thead>
           <tr className={styles["table-header-row"]}>
             <th>Title</th>

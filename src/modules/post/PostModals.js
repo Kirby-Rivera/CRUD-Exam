@@ -1,7 +1,7 @@
 import styles from "./Post.module.scss";
 import { useEffect } from "react";
 import { ICONS } from "assets/icons";
-import { Button, Input, Form, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Input, Form, ModalBody, ModalFooter, Card } from "reactstrap";
 import ModalContainer from "components/Modal";
 
 function HomeForm(props) {
@@ -17,6 +17,7 @@ function HomeForm(props) {
     current,
     toggleModal,
     modal,
+    error,
   } = props;
 
   useEffect(() => {
@@ -29,6 +30,7 @@ function HomeForm(props) {
       toggle={toggleModal}
       title={current === "add-post" ? "Add Post :" : "Edit Post :"}
     >
+      <Card className={error ? styles["error-pop"] : styles["error-pop-hide"]}>{error}</Card>
       {current === "add-post" || current === "edit-post" ? (
         <Form
           onSubmit={current === "add-post" ? addPost : editPost}
@@ -54,13 +56,11 @@ function HomeForm(props) {
         </Form>
       ) : current === "delete-post" ? (
         <>
-          <ModalContainer
-            modal={modal}
-            toggle={toggleModal}
-            title={"Notice!"}
-          >
+          <ModalContainer modal={modal} toggle={toggleModal} title={"Notice!"}>
             <div className={styles["warning-logo"]}>{ICONS.warning}</div>
-            <ModalBody className="text-center">Are you sure you want to delete this post?</ModalBody>
+            <ModalBody className="text-center">
+              Are you sure you want to delete this post?
+            </ModalBody>
             <ModalFooter className="">
               <Button onClick={deletePost}>Delete</Button>
               <Button onClick={toggleModal}>Cancel</Button>

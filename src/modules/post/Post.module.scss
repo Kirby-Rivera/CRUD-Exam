@@ -138,3 +138,25 @@
 .warning-logo {
   margin: 0 auto;
 }
+
+.error-pop {
+  background: rgb(243, 116, 116);
+  text-align: center;
+  color: white;
+  padding: 6px 0;
+
+  &-hide {
+    display: none;
+  }
+}
+.success-pop {
+  background: rgb(116, 243, 152);
+  text-align: center;
+  color: rgb(28, 27, 27);
+  padding: 6px 0;
+  margin-bottom: 20px;
+
+  &-hide {
+    display: none;
+  }
+}

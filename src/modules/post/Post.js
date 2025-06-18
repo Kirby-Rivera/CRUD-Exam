@@ -2,7 +2,7 @@ import styles from "./Post.module.scss";
 import useHome from "./usePost";
 import PostTable from "./PostTable";
 import PostModals from "./PostModals";
-import { Button } from "reactstrap";
+import { Button, Card } from "reactstrap";
 import { ICONS } from "assets/icons";
 import PageNav from "./PageNav";
 
@@ -15,6 +15,7 @@ function Home() {
     message,
     setMessage,
     error,
+    success,
     loading,
     deletePost,
     setError,
@@ -25,7 +26,6 @@ function Home() {
     setCurrentModal,
     clearInputs,
     modal,
-    meta,
     currentPage,
     totalPages,
     handlePageChange,
@@ -33,6 +33,7 @@ function Home() {
 
   return (
     <div className={styles["home"]}>
+     <Card className={success ? styles["success-pop"] : styles["success-pop-hide"]}>{success}</Card> 
       <Button
         className={styles["add-btn"]}
         onClick={() => (
@@ -53,6 +54,7 @@ function Home() {
         toggleModal={toggleModal}
         modal={modal}
         deletePost={deletePost}
+        error={error}
       />
       <PostTable
         posts={posts}

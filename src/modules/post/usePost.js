@@ -16,24 +16,20 @@ export default function useHome() {
   const [success, setSuccess] = useState("");
   const [meta, setMeta] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(meta.totalRows / meta.limit);
+  const totalPages = meta.totalPages;
 
-  function handlePageChange(newPage) {
+  async function handlePageChange(newPage) {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
-      fetchData(newPage);
+
+      const offset = (newPage - 1) * meta.limit;
+
+      const response = await axiosPrivate.get(
+        `/post?limit=${meta.limit}&offset=${offset}&orderBy=${meta.orderBy}&order=${meta.order}`
+      );
+
+      setPosts(response.data.data);
     }
-  }
-
-  console.log(meta.limit)
-
-  async function fetchData(page) {
-    const offset = (page - 1) + meta.limit;
-    const response = await axiosPrivate.get(
-      `/post?limit=${meta.limit}&offset=${offset}`
-    );
-
-    setPosts(response.data.data);
   }
 
   function clearInputs() {
@@ -42,6 +38,7 @@ export default function useHome() {
 
     setTimeout(() => {
       setError("");
+      setSuccess("");
     }, 4000);
   }
 
@@ -58,7 +55,7 @@ export default function useHome() {
     async function getPost() {
       try {
         const response = await axiosPrivate.get(
-          "/post?limit=2",
+          "/post?limit=1&orderBy=title&order=DESC",
           {
             signal: controller.signal,
           }
@@ -76,9 +73,9 @@ export default function useHome() {
 
     return () => {
       isMounted = false;
-      // setTimeout(() => {
-      //   controller.abort();
-      // }, 1000);
+      setTimeout(() => {
+        controller.abort();
+      }, 1000);
     };
   }, [render]);
 
