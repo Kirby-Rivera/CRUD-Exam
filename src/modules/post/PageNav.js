@@ -1,26 +1,28 @@
-import { useState } from "react";
+import { Pagination, PaginationLink, PaginationItem } from "reactstrap";
+import styles from "./Post.module.scss";
 
 function PageNav(props) {
-const { currentPage, totalPages, handlePageChange } = props
+  const { currentPage, totalPages, handlePageChange } = props;
 
   return (
-    <div>
-      <button
+    <Pagination className={styles["page-nav"]}>
+      <PaginationLink
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
         Prev
-      </button>
-      <span>
+      </PaginationLink>
+      <PaginationLink>
         Page {currentPage} of {totalPages}
-      </span>
-      <button
+      </PaginationLink>
+      <PaginationLink
+        next
         disabled={currentPage === totalPages}
         onClick={() => handlePageChange(currentPage + 1)}
       >
         Next
-      </button>
-    </div>
+      </PaginationLink>
+    </Pagination>
   );
 }
 
