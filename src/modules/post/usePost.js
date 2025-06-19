@@ -22,10 +22,10 @@ export default function useHome() {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
 
-      const offset = (newPage - 1) * meta.limit;
+      const offset = (newPage - 1);
 
       const response = await axiosPrivate.get(
-        `/post?limit=${meta.limit}&offset=${offset}&order=${meta.order}&orderBy=title`
+        `/post?limit=${meta.limit}&offset=${offset}&order=DESC`
       );
 
       setPosts(response.data.data);
@@ -55,12 +55,9 @@ export default function useHome() {
     let isMounted = true;
     async function getPost() {
       try {
-        const response = await axiosPrivate.get(
-          "/post?limit=5&orderBy=title&order=DESC",
-          {
-            signal: controller.signal,
-          }
-        );
+        const response = await axiosPrivate.get("/post?&limit=5&order=DESC", {
+          signal: controller.signal,
+        });
         isMounted && setPosts(response.data.data);
         setMeta(response.data.meta);
         setLoading(false);

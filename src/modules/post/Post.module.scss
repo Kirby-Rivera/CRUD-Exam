@@ -1,5 +1,4 @@
 .home {
-  height: 90vh;
   padding: 10px;
 
   .add-btn {
@@ -111,6 +110,7 @@
 }
 
 .table {
+  height: 75vh;
   border-radius: 12px;
 
   thead {
@@ -128,6 +128,8 @@
   }
 
   &-row {
+    max-height: 250px;
+
     button {
       all: unset;
     }
