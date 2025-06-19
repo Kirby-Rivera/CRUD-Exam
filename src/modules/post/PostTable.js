@@ -19,7 +19,7 @@ function HomePostSection(props) {
 
   return (
     <>
-      <Table bordered responsive className={styles["table"] + " mt-3"}>
+      <Table responsive className={styles["table"] + " mt-3"}>
         <thead>
           <tr className={styles["table-header-row"]}>
             <th>Title</th>
