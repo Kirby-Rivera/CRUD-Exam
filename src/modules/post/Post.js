@@ -29,11 +29,16 @@ function Home() {
     currentPage,
     totalPages,
     handlePageChange,
+    startIndex
   } = useHome();
 
   return (
     <div className={styles["home"]}>
-     <Card className={success ? styles["success-pop"] : styles["success-pop-hide"]}>{success}</Card> 
+      <Card
+        className={success ? styles["success-pop"] : styles["success-pop-hide"]}
+      >
+        {success}
+      </Card>
       <Button
         className={styles["add-btn"]}
         onClick={() => (
@@ -57,6 +62,7 @@ function Home() {
         error={error}
       />
       <PostTable
+        error={error}
         posts={posts}
         loading={loading}
         setTitle={setTitle}
@@ -64,6 +70,7 @@ function Home() {
         setId={setId}
         setCurrentModal={setCurrentModal}
         toggleModal={toggleModal}
+        startIndex={startIndex}
       />
       <PageNav
         currentPage={currentPage}

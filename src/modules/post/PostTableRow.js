@@ -12,6 +12,7 @@ function HomePost(props) {
     postId,
     setCurrentModal,
     toggleModal,
+    index
   } = props;
 
   const created_at = new Date(updatedAt);
@@ -29,6 +30,7 @@ function HomePost(props) {
 
   return (
     <tr className={styles["table-row"]}>
+      <td className={styles["postid"]}>{index}</td>
       <td>{title}</td>
       <td>{message}</td>
       <td>{date}</td>
