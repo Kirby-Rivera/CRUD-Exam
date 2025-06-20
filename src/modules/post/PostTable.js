@@ -22,8 +22,6 @@ function HomePostSection(props) {
       </div>
     );
 
-    console.log(startIndex)
-
   return (
     <>
       <Table responsive className={styles["table"] + " mt-3"}>
@@ -39,7 +37,7 @@ function HomePostSection(props) {
         <tbody>
           {posts.length === 0 ? (
             <tr scope="row" className={styles["no-post"]}>
-              <td colSpan={4}>No Post</td>
+              <td colSpan={5}>No Post</td>
             </tr>
           ) : (
             posts?.map((post, index) => (

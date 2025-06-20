@@ -12,7 +12,7 @@ function HomePost(props) {
     postId,
     setCurrentModal,
     toggleModal,
-    index
+    index,
   } = props;
 
   const created_at = new Date(updatedAt);
@@ -48,9 +48,11 @@ function HomePost(props) {
           {ICONS.editIcon}
         </button>
         <button
-          onClick={() => (
-            setId(postId), toggleModal(), setCurrentModal("delete-post")
-          )}
+          onClick={() => {
+            setId(postId); 
+            toggleModal(); 
+            setCurrentModal("delete-post");
+          }}
         >
           {ICONS.deleteIcon}
         </button>

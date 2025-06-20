@@ -1,10 +1,11 @@
-import { useRegister } from "./useRegister";
+import { useRegisterValidation } from "./useRegisterValidation";
 import styles from "./Register.module.scss";
 import { Card, Form, Input, Button, Row } from "reactstrap";
+import RegisterInputField from "./RegisterInputField";
+import useRegisterForm from "./useRegisterForm";
 
 function Register() {
   const {
-    error,
     firstName,
     lastName,
     email,
@@ -14,7 +15,6 @@ function Register() {
     setLastName,
     setEmail,
     setPassword,
-    handleRegister,
     setMatchPwd,
     validEmail,
     validPwd,
@@ -28,7 +28,14 @@ function Register() {
     userRef,
     isPassShown,
     handleShowPassword,
-  } = useRegister();
+  } = useRegisterValidation();
+
+  const { handleRegister, error } = useRegisterForm({
+    firstName,
+    lastName,
+    email,
+    password,
+  });
 
   return (
     <Card className={styles["register"]}>
@@ -63,75 +70,31 @@ function Register() {
           </div>
         </Row>
 
-        <label htmlFor="email">Email:</label>
-        <Input
-          type="text"
-          id="email"
-          autoComplete="off"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          required
-          aria-invalid={validEmail ? "false" : "true"}
-          aria-describedby="uidnote"
-          onFocus={() => setEmailFocus(true)}
-          onBlur={() => setEmailFocus(false)}
+        <RegisterInputField
+          currentInput={"email"}
+          setEmail={setEmail}
+          email={email}
+          validEmail={validEmail}
+          setEmailFocus={setEmailFocus}
+          emailFocus={emailFocus}
         />
-        <p
-          id="uidnote"
-          className={
-            emailFocus && email && !validEmail
-              ? styles["instructions"]
-              : styles["offscreen"]
-          }
-        >
-          Email invalid.
-        </p>
-
-        <label htmlFor="password">Password:</label>
-        <Input
-          type={isPassShown ? "text" : "password"}
-          id="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          required
-          aria-invalid={validPwd ? "false" : "true"}
-          aria-describedby="pwdnote"
-          onFocus={() => setPwdFocus(true)}
-          onBlur={() => setPwdFocus(false)}
+        <RegisterInputField
+          currentInput={"password"}
+          setPassword={setPassword}
+          password={password}
+          validPwd={validPwd}
+          setPwdFocus={setPwdFocus}
+          pwdFocus={pwdFocus}
+          isPassShown={isPassShown}
         />
-        <p
-          id="pwdnote"
-          className={
-            pwdFocus && password && !validPwd
-              ? styles["instructions"]
-              : styles["offscreen"]
-          }
-        >
-          Must be 8 to 24 Characters. Must not have special symbols.
-        </p>
-
-        <label htmlFor="confirm_pwd">Confirm Password:</label>
-        <Input
-          type={isPassShown ? "text" : "password"}
-          id="confirm_pwd"
-          onChange={(e) => setMatchPwd(e.target.value)}
-          value={matchPwd}
-          required
-          aria-invalid={validMatch && matchPwd ? "false" : "true"}
-          aria-describedby="confirmnote"
-          onFocus={() => setMatchFocus(true)}
-          onBlur={() => setMatchFocus(false)}
+        <RegisterInputField
+          setMatchPwd={setMatchPwd}
+          matchPwd={matchPwd}
+          validPwd={validPwd}
+          setMatchFocus={setMatchFocus}
+          matchFocus={matchFocus}
+          isPassShown={isPassShown}
         />
-        <p
-          id="confirmnote"
-          className={
-            matchFocus && matchPwd && !validMatch && matchPwd
-              ? styles["instructions"]
-              : styles["offscreen"]
-          }
-        >
-          Must match the first password Input field.
-        </p>
 
         <div className={styles["checkbox"]}>
           <Input

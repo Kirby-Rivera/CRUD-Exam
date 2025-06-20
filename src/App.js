@@ -1,5 +1,5 @@
 import Login from "views/login/Index";
-import Home from "views/home/Index";
+import Post from "views/post/Index";
 import Register from "views/register/Index";
 import ProtectedRoute from "helpers/ProtectedRoute";
 import Missing from "components/404";
@@ -18,7 +18,7 @@ function App() {
 
       <Route element={<ProtectedRoute />}>
         <Route element={<MainLayout />}>
-          <Route path="/home" element={<Home />} />
+          <Route path="/post" element={<Post />} />
         </Route>
       </Route>
 

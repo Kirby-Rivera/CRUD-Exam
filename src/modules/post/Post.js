@@ -1,10 +1,11 @@
 import styles from "./Post.module.scss";
-import useHome from "./usePost";
+import usePost from "./usePost";
 import PostTable from "./PostTable";
 import PostModals from "./PostModals";
-import { Button, Card } from "reactstrap";
+import PostDelete from "./PostDelete";
+import { Button, Toast, ToastHeader } from "reactstrap";
 import { ICONS } from "assets/icons";
-import PageNav from "./PageNav";
+import PostPageNav from "./PostPageNav";
 
 function Home() {
   const {
@@ -29,16 +30,16 @@ function Home() {
     currentPage,
     totalPages,
     handlePageChange,
-    startIndex
-  } = useHome();
+    startIndex,
+  } = usePost();
 
   return (
     <div className={styles["home"]}>
-      <Card
+      <Toast
         className={success ? styles["success-pop"] : styles["success-pop-hide"]}
       >
         {success}
-      </Card>
+      </Toast>
       <Button
         className={styles["add-btn"]}
         onClick={() => (
@@ -58,8 +59,13 @@ function Home() {
         current={currentModal}
         toggleModal={toggleModal}
         modal={modal}
-        deletePost={deletePost}
         error={error}
+      />
+      <PostDelete
+        deletePost={deletePost}
+        current={currentModal}
+        toggleModal={toggleModal}
+        modal={modal}
       />
       <PostTable
         error={error}
@@ -72,7 +78,7 @@ function Home() {
         toggleModal={toggleModal}
         startIndex={startIndex}
       />
-      <PageNav
+      <PostPageNav
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={handlePageChange}
