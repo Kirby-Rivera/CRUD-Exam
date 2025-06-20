@@ -30,7 +30,9 @@ function HomeForm(props) {
       toggle={toggleModal}
       title={current === "add-post" ? "Add Post :" : "Edit Post :"}
     >
-      <Card className={error ? styles["error-pop"] : styles["error-pop-hide"]}>{error}</Card>
+      <Card className={error ? styles["error-pop"] : styles["error-pop-hide"]}>
+        {error}
+      </Card>
       {current === "add-post" || current === "edit-post" ? (
         <Form
           onSubmit={current === "add-post" ? addPost : editPost}

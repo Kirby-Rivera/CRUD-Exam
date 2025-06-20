@@ -12,16 +12,24 @@ function HomePostSection(props) {
     setId,
     setCurrentModal,
     toggleModal,
+    startIndex
   } = props;
 
-  if (loading) return <Spinner color="dark" />;
-  if (error) return <p>Error loading data</p>;
+  if (loading)
+    return (
+      <div className={styles["spinner-container"]}>
+        {error ? <p>Error loading data</p> : <Spinner color="dark" />}
+      </div>
+    );
+
+    console.log(startIndex)
 
   return (
     <>
       <Table responsive className={styles["table"] + " mt-3"}>
         <thead>
           <tr className={styles["table-header-row"]}>
+            <th>Post Id</th>
             <th>Title</th>
             <th>Message</th>
             <th>Date</th>
@@ -34,7 +42,7 @@ function HomePostSection(props) {
               <td colSpan={4}>No Post</td>
             </tr>
           ) : (
-            posts?.map((post) => (
+            posts?.map((post, index) => (
               <PostTableRow
                 key={post.postId}
                 setTitle={setTitle}
@@ -42,6 +50,7 @@ function HomePostSection(props) {
                 setId={setId}
                 toggleModal={toggleModal}
                 setCurrentModal={setCurrentModal}
+                index={startIndex + index + 1}
                 {...post}
               />
             ))
