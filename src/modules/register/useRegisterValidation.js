@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router";
-import axios from "api/axios";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-export function useRegister() {
+export function useRegisterValidation() {
   const userRef = useRef();
   const errRef = useRef();
 
@@ -27,9 +25,6 @@ export function useRegister() {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
   useEffect(() => {
     userRef.current?.focus();
   }, []);
@@ -47,44 +42,6 @@ export function useRegister() {
     setError("");
   }, [email, password, matchPwd]);
 
-  async function handleRegister(e) {
-    e.preventDefault();
-
-    const v1 = EMAIL_REGEX.test(email);
-    const v2 = PWD_REGEX.test(password);
-
-    if (!v1 || !v2) {
-      setError("Invalid Entry");
-      return;
-    }
-
-    try {
-      await axios.post(
-        "/user/signup",
-        JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-        }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-
-      navigate(location.state?.from?.pathname || "/", { replace: true });
-    } catch (error) {
-      if (!error?.response) {
-        setError("No Server Response");
-      } else if (error.response?.status === 409) {
-        setError("Username Taken");
-      } else {
-        setError("Registration Failed");
-      }
-    }
-  }
-
   function handleShowPassword(prev) {
     setIsPassShown((prev = !prev));
   }
@@ -100,7 +57,6 @@ export function useRegister() {
     setLastName,
     setEmail,
     setPassword,
-    handleRegister,
     setMatchPwd,
     validEmail,
     setValidEmail,

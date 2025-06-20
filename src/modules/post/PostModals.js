@@ -8,7 +8,6 @@ function HomeForm(props) {
   const {
     addPost,
     editPost,
-    deletePost,
     title,
     message,
     setTitle,
@@ -28,48 +27,49 @@ function HomeForm(props) {
     <ModalContainer
       modal={modal}
       toggle={toggleModal}
-      title={current === "add-post" ? "Add Post :" : "Edit Post :"}
+      title={
+        current === "add-post"
+          ? "Add Post :"
+          : current === "edit-post" && "Edit Post :"
+      }
     >
-      <Card className={error ? styles["error-pop"] : styles["error-pop-hide"]}>
+      <Card
+        className={
+          error
+            ? styles["error-pop"]
+            : current === "edit-post" && styles["error-pop-hide"]
+        }
+      >
         {error}
       </Card>
-      {current === "add-post" || current === "edit-post" ? (
-        <Form
-          onSubmit={current === "add-post" ? addPost : editPost}
-          className={styles["form-post"]}
-        >
-          <label htmlFor="title">Title: </label>
-          <Input
-            id="title"
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <label htmlFor="message">Message: </label>
-          <Input
-            type="textarea"
-            id="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <ModalFooter>
-            <Button>{current === "add-post" ? "Add post" : "Edit Post"}</Button>
-          </ModalFooter>
-        </Form>
-      ) : current === "delete-post" ? (
-        <>
-          <ModalContainer modal={modal} toggle={toggleModal} title={"Notice!"}>
-            <div className={styles["warning-logo"]}>{ICONS.warning}</div>
-            <ModalBody className="text-center">
-              Are you sure you want to delete this post?
-            </ModalBody>
-            <ModalFooter className="">
-              <Button onClick={deletePost}>Delete</Button>
-              <Button onClick={toggleModal}>Cancel</Button>
-            </ModalFooter>
-          </ModalContainer>
-        </>
-      ) : null}
+      <Form
+        onSubmit={
+          current === "add-post" ? addPost : current === "edit-post" && editPost
+        }
+        className={styles["form-post"]}
+      >
+        <label htmlFor="title">Title: </label>
+        <Input
+          id="title"
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <label htmlFor="message">Message: </label>
+        <Input
+          type="textarea"
+          id="message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <ModalFooter>
+          <Button>
+            {current === "add-post"
+              ? "Add post"
+              : current === "edit-post" && "Edit Post"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </ModalContainer>
   );
 }

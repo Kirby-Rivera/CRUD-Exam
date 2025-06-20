@@ -1,4 +1,4 @@
-import { useRegister } from "./useRegister";
+import { useRegister } from "./useRegisterValidation";
 import styles from "./Register.module.scss";
 
 function RegisterInputField(props) {
@@ -18,9 +18,10 @@ function RegisterInputField(props) {
     setPwdFocus,
     matchFocus,
     setMatchFocus,
-    userRef,
     currentInput,
+    isPassShown,
   } = props;
+
 
   return currentInput === "email" ? (
     <>
@@ -28,7 +29,6 @@ function RegisterInputField(props) {
       <input
         type="text"
         id="email"
-        ref={userRef}
         autoComplete="off"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
@@ -46,14 +46,14 @@ function RegisterInputField(props) {
             : styles["offscreen"]
         }
       >
-        Testing lang kung lalabas
+        Email is invalid
       </p>
     </>
   ) : currentInput === "password" ? (
     <>
       <label htmlFor="password">Password:</label>
       <input
-        type="password"
+        type={isPassShown ? "text" : "password"}
         id="password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
@@ -73,10 +73,12 @@ function RegisterInputField(props) {
       >
         Must be 8 to 24 Characters. Must not have special symbols.
       </p>
-
+    </>
+  ) : (
+    <>
       <label htmlFor="confirm_pwd">Confirm Password:</label>
       <input
-        type="password"
+        type={isPassShown ? "text" : "password"}
         id="confirm_pwd"
         onChange={(e) => setMatchPwd(e.target.value)}
         value={matchPwd}
@@ -97,7 +99,7 @@ function RegisterInputField(props) {
         Must match the first password input field.
       </p>
     </>
-  ) : null;
+  );
 }
 
 export default RegisterInputField;

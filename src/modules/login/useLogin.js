@@ -21,7 +21,7 @@ export function useLogin() {
     try {
       const response = await axios.post(
         "/auth/login",
-        JSON.stringify({ email: username, password: password }),
+        JSON.stringify({ email: username.trim(), password: password.trim() }),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -30,7 +30,7 @@ export function useLogin() {
 
       cookies.set("SESSION_COOKIE", response.data.data.token);
       cookies.set("USER_ID", response.data.data.userId);
-      navigate(location.state?.from?.pathname || "/home", { replace: true });
+      navigate(location.state?.from?.pathname || "/post", { replace: true });
     } catch (err) {
       if (!err?.response) {
         setError("No Server Response");

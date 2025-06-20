@@ -6,7 +6,12 @@ const ModalContainer = (props) => {
 
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle} className={styles["main-modal"]}>
+      <Modal
+        centered
+        isOpen={modal}
+        toggle={toggle}
+        className={styles["main-modal"]}
+      >
         <ModalHeader toggle={toggle}>{title}</ModalHeader>
         {children}
       </Modal>

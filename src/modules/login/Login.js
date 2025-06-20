@@ -25,6 +25,7 @@ function Login() {
         <Input
           type="text"
           name="username"
+          required
           value={username}
           onChange={(e) => setUserName(e.target.value)}
           placeholder="Email"
@@ -32,6 +33,7 @@ function Login() {
         <Input
           type={isPassShown ? "text" : "password"}
           name="password"
+          required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
