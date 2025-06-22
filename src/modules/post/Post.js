@@ -1,5 +1,8 @@
 import styles from "./Post.module.scss";
-import usePost from "./usePost";
+import useHandlePage from "./hooks/useHandlePage";
+import usePostRender from "./hooks/usePostRender";
+import useHandlePosts from "./hooks/useHandlePosts";
+import usePostsInputs from "./hooks/usePostsInputs";
 import PostTable from "./PostTable";
 import PostModals from "./PostModals";
 import PostDelete from "./PostDelete";
@@ -9,29 +12,41 @@ import PostPageNav from "./PostPageNav";
 
 function Home() {
   const {
-    posts,
-    addPost,
-    title,
-    setTitle,
-    message,
-    setMessage,
-    error,
-    success,
     loading,
-    deletePost,
+    posts,
+    meta,
+    error,
+    setRender,
     setError,
+    setPosts,
+    setMeta,
+  } = usePostRender();
+
+  const { title, message, id, setTitle, setMessage, setId } = usePostsInputs();
+
+  const { currentPage, totalPages, handlePageChange, startIndex } =
+    useHandlePage(meta, setPosts, setMeta);
+
+  const {
+    addPost,
+    deletePost,
     editPost,
-    setId,
-    toggleModal,
-    currentModal,
-    setCurrentModal,
     clearInputs,
+    toggleModal,
+    setCurrentModal,
+    currentModal,
+    success,
     modal,
-    currentPage,
-    totalPages,
-    handlePageChange,
-    startIndex,
-  } = usePost();
+  } = useHandlePosts(
+    setRender,
+    setError,
+    title,
+    message,
+    id,
+    setMessage,
+    setTitle,
+    setId
+  );
 
   return (
     <div className={styles["home"]}>
@@ -71,8 +86,8 @@ function Home() {
         error={error}
         posts={posts}
         loading={loading}
-        setTitle={setTitle}
-        setMessage={setMessage}
+        setTitle={setTitle} //
+        setMessage={setMessage} //
         setId={setId}
         setCurrentModal={setCurrentModal}
         toggleModal={toggleModal}

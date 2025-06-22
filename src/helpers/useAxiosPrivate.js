@@ -2,11 +2,9 @@ import { axiosPrivate } from "api/axios";
 import { useEffect } from "react";
 import { cookies } from "./CookieHelper";
 import { useNavigate, useLocation } from "react-router";
-import { useLogout } from "./useLogout";
 
 function useAxiosPrivate() {
   const auth = cookies.get("SESSION_COOKIE");
-  const { logout } = useLogout();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,10 +30,9 @@ function useAxiosPrivate() {
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
 
-          navigate(location.state?.from?.pathname || "/", {
+          navigate(location.state?.from?.pathname || "/expired", {
             replace: true,
           });
-          logout();
         }
 
         return Promise.reject(error);
