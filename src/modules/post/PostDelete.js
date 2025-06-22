@@ -8,18 +8,20 @@ function PostDelete(props) {
   const { deletePost, current, modal, toggleModal } = props;
 
   return (
-    <ModalContainer modal={modal} toggle={toggleModal} title={"Notice!"}>
-      <div className={styles["warning-logo"]}>{ICONS.warning}</div>
-      <ModalBody className="text-center">
-        Are you sure you want to delete this post?
-      </ModalBody>
-      <ModalFooter>
-        <Button color="danger" onClick={deletePost}>
-          Delete
-        </Button>
-        <Button onClick={toggleModal}>Cancel</Button>
-      </ModalFooter>
-    </ModalContainer>
+    current === "delete-post" && (
+      <ModalContainer modal={modal} title={"Notice!"}>
+        <div className={styles["warning-logo"]}>{ICONS.warning}</div>
+        <ModalBody className="text-center">
+          Are you sure you want to delete this post?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={deletePost}>
+            Delete
+          </Button>
+          <Button onClick={toggleModal}>Cancel</Button>
+        </ModalFooter>
+      </ModalContainer>
+    )
   );
 }
 

@@ -30,21 +30,21 @@ function HomeForm(props) {
       title={
         current === "add-post"
           ? "Add Post :"
-          : current === "edit-post" && "Edit Post :"
+          : "Edit Post :"
       }
     >
       <Card
         className={
           error
             ? styles["error-pop"]
-            : current === "edit-post" && styles["error-pop-hide"]
+            : styles["error-pop-hide"]
         }
       >
         {error}
       </Card>
       <Form
         onSubmit={
-          current === "add-post" ? addPost : current === "edit-post" && editPost
+          current === "add-post" ? addPost : editPost
         }
         className={styles["form-post"]}
       >
@@ -66,7 +66,7 @@ function HomeForm(props) {
           <Button>
             {current === "add-post"
               ? "Add post"
-              : current === "edit-post" && "Edit Post"}
+              : "Edit Post"}
           </Button>
         </ModalFooter>
       </Form>

@@ -1,7 +1,7 @@
 import styles from "./Post.module.scss";
 import { ICONS } from "assets/icons";
 
-function HomePost(props) {
+function PostTableRow(props) {
   const {
     updatedAt,
     message,
@@ -61,4 +61,4 @@ function HomePost(props) {
   );
 }
 
-export default HomePost;
+export default PostTableRow;

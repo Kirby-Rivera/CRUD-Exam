@@ -28,7 +28,9 @@ export function useLogin() {
         }
       );
 
-      cookies.set("SESSION_COOKIE", response.data.data.token);
+      cookies.set("SESSION_COOKIE", response.data.data.token, {
+        maxAge: 10,
+      });
       cookies.set("USER_ID", response.data.data.userId);
       navigate(location.state?.from?.pathname || "/post", { replace: true });
     } catch (err) {

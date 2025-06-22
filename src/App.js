@@ -5,6 +5,7 @@ import ProtectedRoute from "helpers/ProtectedRoute";
 import Missing from "components/404";
 import AuthLayout from "components/AuthLayout";
 import MainLayout from "components/MainLayout";
+import Testing from './helpers/Testing'
 import "App.scss";
 import { Routes, Route } from "react-router";
 
@@ -21,6 +22,8 @@ function App() {
           <Route path="/post" element={<Post />} />
         </Route>
       </Route>
+
+      <Route path="/expired" element={<Testing />} />
 
       <Route path="*" element={<Missing />} />
     </Routes>
