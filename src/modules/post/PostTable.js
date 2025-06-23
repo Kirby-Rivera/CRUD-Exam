@@ -11,8 +11,9 @@ function HomePostSection(props) {
     setMessage,
     setId,
     setCurrentModal,
-    toggleModal,
-    startIndex
+    setModal,
+    setDelModal,
+    startIndex,
   } = props;
 
   if (loading)
@@ -46,7 +47,8 @@ function HomePostSection(props) {
                 setTitle={setTitle}
                 setMessage={setMessage}
                 setId={setId}
-                toggleModal={toggleModal}
+                setModal={setModal}
+                setDelModal={setDelModal}
                 setCurrentModal={setCurrentModal}
                 index={startIndex + index + 1}
                 {...post}

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { axiosPrivate } from "api/axios";
 
 function useHandlePosts(
@@ -7,28 +6,10 @@ function useHandlePosts(
   title,
   message,
   id,
-  setTitle,
-  setMessage,
-  setId
+  setId,
+  clearInputs,
+  setSuccess,
 ) {
-  const [success, setSuccess] = useState("");
-  const [currentModal, setCurrentModal] = useState("");
-  const [modal, setModal] = useState(false);
-
-  function clearInputs() {
-    setTitle("");
-    setMessage("");
-
-    setTimeout(() => {
-      setError("");
-      setSuccess("");
-    }, 4000);
-  }
-
-  function toggleModal() {
-    setModal(!modal);
-  }
-
   async function addPost(e) {
     e.preventDefault();
 
@@ -47,7 +28,6 @@ function useHandlePosts(
       setRender((render) => !render);
 
       clearInputs();
-      toggleModal("");
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +48,6 @@ function useHandlePosts(
       setRender((render) => !render);
 
       clearInputs();
-      toggleModal("");
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +71,6 @@ function useHandlePosts(
       setRender((render) => !render);
 
       clearInputs();
-      toggleModal("");
     } catch (error) {
       console.log(error);
     }
@@ -103,16 +81,7 @@ function useHandlePosts(
     deletePost,
     editPost,
     clearInputs,
-    toggleModal,
-    title,
-    setTitle,
-    message,
-    setMessage,
-    setCurrentModal,
-    currentModal,
     setId,
-    success,
-    modal,
   };
 }
 
