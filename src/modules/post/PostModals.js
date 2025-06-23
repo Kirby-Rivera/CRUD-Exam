@@ -1,10 +1,9 @@
 import styles from "./Post.module.scss";
 import { useEffect } from "react";
-import { ICONS } from "assets/icons";
-import { Button, Input, Form, ModalBody, ModalFooter, Card } from "reactstrap";
+import { Button, Input, Form, ModalFooter, Card } from "reactstrap";
 import ModalContainer from "components/Modal";
 
-function HomeForm(props) {
+function PostModals(props) {
   const {
     addPost,
     editPost,
@@ -14,7 +13,7 @@ function HomeForm(props) {
     setMessage,
     setError,
     current,
-    toggleModal,
+    setModal,
     modal,
     error,
   } = props;
@@ -26,25 +25,29 @@ function HomeForm(props) {
   return (
     <ModalContainer
       modal={modal}
-      toggle={toggleModal}
+      toggle={() => setModal(!modal)}
       title={
         current === "add-post"
           ? "Add Post :"
-          : "Edit Post :"
+          : current === "edit-post"
+          ? "Edit Post :"
+          : "View Post"
       }
     >
-      <Card
-        className={
-          error
-            ? styles["error-pop"]
-            : styles["error-pop-hide"]
-        }
-      >
+      <Card className={error ? styles["error-pop"] : styles["error-pop-hide"]}>
         {error}
       </Card>
+
       <Form
         onSubmit={
-          current === "add-post" ? addPost : editPost
+          current === "add-post"
+            ? addPost
+            : current === "edit-post"
+            ? editPost
+            : (e) => {
+                e.preventDefault();
+                setModal(false);
+              }
         }
         className={styles["form-post"]}
       >
@@ -54,6 +57,7 @@ function HomeForm(props) {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          disabled={current === "view-post"}
         />
         <label htmlFor="message">Message: </label>
         <Input
@@ -61,12 +65,15 @@ function HomeForm(props) {
           id="message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          disabled={current === "view-post"}
         />
         <ModalFooter>
           <Button>
             {current === "add-post"
               ? "Add post"
-              : "Edit Post"}
+              : current === "edit-post"
+              ? "Edit Post"
+              : "Close"}
           </Button>
         </ModalFooter>
       </Form>
@@ -74,4 +81,4 @@ function HomeForm(props) {
   );
 }
 
-export default HomeForm;
+export default PostModals;

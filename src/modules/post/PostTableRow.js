@@ -11,7 +11,9 @@ function PostTableRow(props) {
     setId,
     postId,
     setCurrentModal,
-    toggleModal,
+    setModal,
+    setDelModal,
+    modal,
     index,
   } = props;
 
@@ -37,20 +39,31 @@ function PostTableRow(props) {
 
       <td className={styles["table-actions"]}>
         <button
-          onClick={() => (
-            setTitle(title),
-            setMessage(message),
-            setId(postId),
-            toggleModal(),
-            setCurrentModal("edit-post")
-          )}
+          onClick={() => {
+            setTitle(title);
+            setMessage(message);
+            setId(postId);
+            setModal(!modal);
+            setCurrentModal("view-post");
+          }}
+        >
+          {ICONS.viewIcon}
+        </button>
+        <button
+          onClick={() => {
+            setTitle(title);
+            setMessage(message);
+            setId(postId);
+            setModal(!modal);
+            setCurrentModal("edit-post");
+          }}
         >
           {ICONS.editIcon}
         </button>
         <button
           onClick={() => {
-            setId(postId); 
-            toggleModal(); 
+            setId(postId);
+            setDelModal(!modal);
             setCurrentModal("delete-post");
           }}
         >

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useAxiosPrivate from "helpers/useAxiosPrivate";
 
 export default function useHandlePage(meta, setPosts, setMeta) {

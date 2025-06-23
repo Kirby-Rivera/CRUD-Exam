@@ -3,10 +3,12 @@ import useHandlePage from "./hooks/useHandlePage";
 import usePostRender from "./hooks/usePostRender";
 import useHandlePosts from "./hooks/useHandlePosts";
 import usePostsInputs from "./hooks/usePostsInputs";
+import useHandleModal from "./hooks/useHandleModal";
+import Utilities from "helpers/Utilities";
 import PostTable from "./PostTable";
 import PostModals from "./PostModals";
 import PostDelete from "./PostDelete";
-import { Button, Toast, ToastHeader } from "reactstrap";
+import { Button, Toast } from "reactstrap";
 import { ICONS } from "assets/icons";
 import PostPageNav from "./PostPageNav";
 
@@ -28,24 +30,31 @@ function Home() {
     useHandlePage(meta, setPosts, setMeta);
 
   const {
-    addPost,
-    deletePost,
-    editPost,
-    clearInputs,
-    toggleModal,
-    setCurrentModal,
     currentModal,
-    success,
     modal,
-  } = useHandlePosts(
+    delModal,
+    setCurrentModal,
+    setModal,
+    setDelModal,
+  } = useHandleModal();
+
+  const { clearInputs, success, setSuccess } = Utilities(
+    setTitle,
+    setMessage,
+    setError,
+    setModal,
+    setDelModal
+  );
+
+  const { addPost, deletePost, editPost } = useHandlePosts(
     setRender,
     setError,
     title,
     message,
     id,
-    setMessage,
-    setTitle,
-    setId
+    setId,
+    clearInputs,
+    setSuccess
   );
 
   return (
@@ -57,9 +66,12 @@ function Home() {
       </Toast>
       <Button
         className={styles["add-btn"]}
-        onClick={() => (
-          toggleModal(), setCurrentModal("add-post"), clearInputs()
-        )}
+        onClick={() => {
+          setModal(!modal);
+          setCurrentModal("add-post");
+          setTitle("");
+          setMessage("");
+        }}
       >
         Add new post {ICONS.add}
       </Button>
@@ -72,25 +84,26 @@ function Home() {
         setMessage={setMessage}
         setError={setError}
         current={currentModal}
-        toggleModal={toggleModal}
+        setModal={setModal}
         modal={modal}
         error={error}
       />
       <PostDelete
         deletePost={deletePost}
         current={currentModal}
-        toggleModal={toggleModal}
-        modal={modal}
+        setDelModal={setDelModal}
+        delModal={delModal}
       />
       <PostTable
         error={error}
         posts={posts}
         loading={loading}
-        setTitle={setTitle} //
-        setMessage={setMessage} //
+        setTitle={setTitle}
+        setMessage={setMessage}
         setId={setId}
         setCurrentModal={setCurrentModal}
-        toggleModal={toggleModal}
+        setModal={setModal}
+        setDelModal={setDelModal}
         startIndex={startIndex}
       />
       <PostPageNav
